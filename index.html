@@ -55,10 +55,6 @@
     [data-stack] { grid-template-columns:1fr !important; }
     [data-stack2] { grid-template-columns:1fr 1fr !important; }
     [data-sec] { padding-left:24px !important; padding-right:24px !important; padding-top:64px !important; padding-bottom:64px !important; }
-    /* Hero: mostrar la portada completa (cara visible), sin recorte */
-    [data-hero] { height:auto !important; min-height:0 !important; padding-top:0 !important; display:block !important; }
-    [data-hero-img] { position:static !important; height:auto !important; }
-    [data-hero] span { position:absolute !important; left:0; right:0; bottom:0; text-align:center; }
     [data-hero-logo] { width:min(340px,80%) !important; }
     [data-quote] { font-size:34px !important; }
     [data-h2] { font-size:42px !important; }
@@ -108,10 +104,10 @@
   </nav>
 
   <!-- HERO -->
-  <header id="top" data-hero style="position:relative;height:92vh;min-height:620px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center">
-    <img src="uploads/piggy2.webp" alt="Piggy Knight" data-hero-img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%">
+  <header id="top" data-hero style="position:relative;overflow:hidden;background:#0f0b08">
+    <img src="uploads/piggy2.webp" alt="Piggy Knight" data-hero-img style="display:block;width:100%;height:auto">
     <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,11,8,0.85) 0%,rgba(15,11,8,0.1) 22%,rgba(15,11,8,0) 45%)"></div>
-    <span style="position:relative;font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#e6c98a;padding-bottom:34px;text-shadow:0 2px 12px rgba(0,0,0,0.9)">↓ Piggy Knight ↓</span>
+    <span style="position:absolute;left:0;right:0;bottom:0;text-align:center;font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#e6c98a;padding-bottom:34px;text-shadow:0 2px 12px rgba(0,0,0,0.9)">↓ Piggy Knight ↓</span>
   </header>
 
   <!-- INTRO (título + pregunta, debajo de la portada) -->
@@ -157,9 +153,9 @@
           <img src="uploads/Ensayo.webp" alt="Ir a casa o al bosque" data-zoomable style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover">
         </div>
         <div style="display:flex;flex-direction:column;gap:26px">
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">I</span><div><h3 data-en="It begins as a fairy tale" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">Empieza como un cuento</h3><p data-en="A father tells his daughter a story. That night, the girl disappears." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Un padre le narra una historia a su hija. Esa noche, la niña desaparece.</p></div></div>
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">II</span><div><h3 data-en="The search" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">La búsqueda</h3><p data-en="Each boss blames another, in a chain of manipulation that drives Piggy deeper into the wilds." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Cada jefe acusa a otro, en una cadena de manipulación que interna a Piggy en el monte.</p></div></div>
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">III</span><div><h3 data-en="The twist" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">El giro</h3><p data-en="The truth was near the beginning all along. The ending depends on your choices." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">La verdad estuvo siempre cerca del inicio. El desenlace depende de tus decisiones.</p></div></div>
+          <div><h3 data-en="It begins as a fairy tale" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">Empieza como un cuento</h3><p data-en="A father tells his daughter a story. That night, the girl disappears." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Un padre le narra una historia a su hija. Esa noche, la niña desaparece.</p></div>
+          <div><h3 data-en="The search" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">La búsqueda</h3><p data-en="Each boss blames another, in a chain of manipulation that drives Piggy deeper into the wilds." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Cada jefe acusa a otro, en una cadena de manipulación que interna a Piggy en el monte.</p></div>
+          <div><h3 data-en="The twist" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">El giro</h3><p data-en="The truth was near the beginning all along. The ending depends on your choices." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">La verdad estuvo siempre cerca del inicio. El desenlace depende de tus decisiones.</p></div>
         </div>
       </div>
       <div data-stack2 style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px">
