@@ -12,9 +12,7 @@ Abrí `index.html` en el navegador. No necesita build ni dependencias: es HTML +
 
 ## Estructura
 - `index.html` — la página completa.
-- `uploads/` — ilustraciones en acuarela.
+- `uploads/` — ilustraciones en acuarela, optimizadas a WebP (~2 MB en total).
+- `uploads/og.jpg` — imagen de vista previa al compartir el link.
 - `CNAME` — dominio personalizado (www.piggyknight.com).
 - `.nojekyll` — evita el procesado Jekyll de GitHub Pages.
-
-## Pendiente / mejoras sugeridas
-- Optimizar las imágenes a WebP/AVIF (hoy ~70 MB en total) para que cargue más rápido.
