@@ -15,6 +15,7 @@
 <meta property="og:url" content="https://www.piggyknight.com/">
 <meta property="og:image" content="https://www.piggyknight.com/uploads/og.jpg">
 <meta property="og:locale" content="es_UY">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Piggy Knight — Nowherelado Games">
 <meta name="twitter:description" content="Acción narrativa 2D de fantasía medieval oscura con raíz criolla. PC (Steam).">
@@ -36,6 +37,11 @@
   img[data-zoomable] { cursor: zoom-in; transition: filter 0.15s, transform 0.15s; }
   img[data-zoomable]:hover { filter: brightness(1.08); }
 
+  /* Selector de idioma */
+  .langtoggle { display:inline-flex; align-items:center; border:1px solid #c8a24a; font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.1em; }
+  .langtoggle button { background:transparent; color:#c8a24a; border:0; padding:8px 11px; cursor:pointer; font:inherit; letter-spacing:inherit; line-height:1; }
+  .langtoggle button.active { background:#c8a24a; color:#1a120b; }
+
   /* Lightbox */
   #lightbox { position:fixed; inset:0; z-index:200; background:rgba(10,7,5,0.94); display:none; align-items:center; justify-content:center; padding:40px; cursor:zoom-out; }
   #lightbox.open { display:flex; }
@@ -45,21 +51,36 @@
 
   @media (max-width: 900px) {
     nav { padding:14px 20px !important; flex-wrap:wrap; gap:10px; }
-    nav > div { gap:18px !important; font-size:13px !important; }
+    nav .navlinks { gap:18px !important; font-size:13px !important; }
     [data-stack] { grid-template-columns:1fr !important; }
     [data-stack2] { grid-template-columns:1fr 1fr !important; }
     [data-sec] { padding-left:24px !important; padding-right:24px !important; padding-top:64px !important; padding-bottom:64px !important; }
-    [data-hero] { height:auto !important; min-height:0 !important; padding-top:96px !important; }
-    [data-hero-inner] { padding-bottom:52px !important; }
+    /* Hero: mostrar la portada completa (cara visible), sin recorte */
+    [data-hero] { height:auto !important; min-height:0 !important; padding-top:0 !important; display:block !important; }
+    [data-hero-img] { position:static !important; height:auto !important; }
+    [data-hero] span { position:absolute !important; left:0; right:0; bottom:0; text-align:center; }
     [data-hero-logo] { width:min(340px,80%) !important; }
     [data-quote] { font-size:34px !important; }
     [data-h2] { font-size:42px !important; }
     [data-imgcol] { min-height:340px !important; }
+    /* Footer sin desborde en pantallas chicas */
+    footer#contacto { min-height:0 !important; }
+    [data-footer-img] { min-height:320px !important; }
+    [data-footer-text] { padding:56px 24px !important; }
+    [data-footer-quote] { font-size:32px !important; }
+    [data-footer-date] { font-size:42px !important; }
+    [data-footer-links] { gap:20px !important; }
+    [data-footer-logo] { width:96px !important; }
+    [data-footer-site] { font-size:22px !important; }
   }
   @media (max-width: 560px) {
-    nav > div { display:none; }
+    nav .navlinks { display:none !important; }
     [data-stack2] { grid-template-columns:1fr !important; }
     [data-h2] { font-size:34px !important; }
+    [data-footer-quote] { font-size:28px !important; }
+    [data-footer-date] { font-size:36px !important; }
+    [data-footer-logo] { width:84px !important; }
+    [data-footer-site] { font-size:20px !important; letter-spacing:0.04em !important; }
   }
 </style>
 </head>
@@ -70,19 +91,25 @@
   <!-- NAV -->
   <nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 56px;background:rgba(15,11,8,0.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(200,162,74,0.22)">
     <a href="#top" style="display:flex;align-items:center"><img src="uploads/logo_piggyknight.webp" alt="Piggy Knight" style="height:44px;width:auto;display:block"></a>
-    <div style="display:flex;gap:38px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.12em;text-transform:uppercase">
-      <a href="#historia">Historia</a>
-      <a href="#personajes">Personajes</a>
-      <a href="#juego">Juego</a>
-      <a href="#uruguay">Uruguay</a>
-      <a href="#equipo">Estudio</a>
+    <div class="navlinks" style="display:flex;gap:38px;font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.12em;text-transform:uppercase">
+      <a href="#historia" data-en="Story">Historia</a>
+      <a href="#personajes" data-en="Characters">Personajes</a>
+      <a href="#juego" data-en="Game">Juego</a>
+      <a href="#uruguay" data-en="Uruguay">Uruguay</a>
+      <a href="#equipo" data-en="Studio">Estudio</a>
     </div>
-    <a href="#contacto" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid #c8a24a;color:#e6c98a;padding:9px 20px">Wishlist</a>
+    <div style="display:flex;align-items:center;gap:18px">
+      <div class="langtoggle" role="group" aria-label="Idioma / Language">
+        <button type="button" data-lang="es">ES</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <a href="#contacto" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;border:1px solid #c8a24a;color:#e6c98a;padding:9px 20px">Wishlist</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <header id="top" data-hero style="position:relative;height:92vh;min-height:620px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center">
-    <img src="uploads/piggy2.webp" alt="Piggy Knight" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 32%">
+    <img src="uploads/piggy2.webp" alt="Piggy Knight" data-hero-img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%">
     <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,11,8,0.85) 0%,rgba(15,11,8,0.1) 22%,rgba(15,11,8,0) 45%)"></div>
     <span style="position:relative;font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#e6c98a;padding-bottom:34px;text-shadow:0 2px 12px rgba(0,0,0,0.9)">↓ Piggy Knight ↓</span>
   </header>
@@ -92,10 +119,10 @@
     <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:26px">
       <span style="font-family:'Cinzel',serif;font-size:16px;letter-spacing:0.32em;text-transform:uppercase;color:#1a120b;background:#e6c98a;padding:8px 18px;font-weight:700">Nowherelado Games</span>
       <img src="uploads/logo_piggyknight.webp" alt="Piggy Knight" data-hero-logo style="width:min(460px,80%);height:auto;filter:drop-shadow(0 8px 32px rgba(0,0,0,0.6))">
-      <p style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-size:30px;line-height:1.3;color:#f4e9cf;max-width:620px">¿Puede perdonar a la bestia sin convertirse en ella?</p>
+      <p data-en="Can he forgive the beast without becoming one?" style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-size:30px;line-height:1.3;color:#f4e9cf;max-width:620px">¿Puede perdonar a la bestia sin convertirse en ella?</p>
       <div style="display:flex;align-items:center;gap:26px;margin-top:8px;flex-wrap:wrap;justify-content:center">
-        <a href="#historia" style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.14em;text-transform:uppercase;background:#c8a24a;color:#1a120b;padding:15px 32px;font-weight:600">Descubrir el juego</a>
-        <span style="font-size:20px;letter-spacing:0.02em;color:#c9b28c">Acción narrativa 2D · PC (Steam)</span>
+        <a href="#historia" data-en="Discover the game" style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.14em;text-transform:uppercase;background:#c8a24a;color:#1a120b;padding:15px 32px;font-weight:600">Descubrir el juego</a>
+        <span data-en="2D narrative action · PC (Steam)" style="font-size:20px;letter-spacing:0.02em;color:#c9b28c">Acción narrativa 2D · PC (Steam)</span>
       </div>
     </div>
   </section>
@@ -107,13 +134,13 @@
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(23,17,12,0) 78%,rgba(23,17,12,0.9) 100%)"></div>
     </div>
     <div style="padding:96px 80px;display:flex;flex-direction:column;justify-content:center;gap:32px">
-      <span style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#c8a24a">La propuesta</span>
-      <p style="margin:0;font-size:33px;line-height:1.42;color:#eaddc0">Un antiguo caballero, un cerdo guerrero retirado, sale a rescatar a su hija secuestrada. Su verdadero conflicto no es vencer a la bestia, <strong style="color:#e6a24a;font-weight:600">sino no volver a convertirse en ella.</strong></p>
+      <span data-en="The premise" style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#c8a24a">La propuesta</span>
+      <p data-en="An old knight, a retired warrior pig, sets out to rescue his kidnapped daughter. His true conflict isn't defeating the beast, <strong style='color:#e6a24a;font-weight:600'>but not becoming one again.</strong>" style="margin:0;font-size:33px;line-height:1.42;color:#eaddc0">Un antiguo caballero, un cerdo guerrero retirado, sale a rescatar a su hija secuestrada. Su verdadero conflicto no es vencer a la bestia, <strong style="color:#e6a24a;font-weight:600">sino no volver a convertirse en ella.</strong></p>
       <div data-stack2 style="display:grid;grid-template-columns:1fr 1fr;gap:2px 44px;margin-top:8px">
-        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Matar o perdonar</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Cada elección cambia la historia y el final.</p></div>
-        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Combate con peso</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Lateral, simple y físico. Cada golpe importa.</p></div>
-        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Jefes memorables</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Cada capítulo culmina en una prueba emocional.</p></div>
-        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Raíz criolla</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Fantasía medieval oscura con alma uruguaya.</p></div>
+        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 data-en="Kill or forgive" style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Matar o perdonar</h3><p data-en="Every choice changes the story and the ending." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Cada elección cambia la historia y el final.</p></div>
+        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 data-en="Weighty combat" style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Combate con peso</h3><p data-en="Side-scrolling, simple and physical. Every hit matters." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Lateral, simple y físico. Cada golpe importa.</p></div>
+        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 data-en="Memorable bosses" style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Jefes memorables</h3><p data-en="Each chapter builds to an emotional trial." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Cada capítulo culmina en una prueba emocional.</p></div>
+        <div style="padding:20px 0;border-top:1px solid #3a2e1e"><h3 data-en="Criollo roots" style="margin:0 0 6px;font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#f0e4cc">Raíz criolla</h3><p data-en="Dark medieval fantasy with a Uruguayan soul." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Fantasía medieval oscura con alma uruguaya.</p></div>
       </div>
     </div>
   </section>
@@ -122,25 +149,25 @@
   <section id="historia" data-sec style="position:relative;background:linear-gradient(rgba(20,14,9,0.9),rgba(14,9,6,0.95)),url('uploads/fondo_papel.webp') center/cover;padding:104px 56px">
     <div style="max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:52px">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap">
-        <h2 data-h2 style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">La historia</h2>
-        <p style="margin:0;font-size:23px;color:#c3b498;max-width:520px">Lineal y cerrada. Tres actos que avanzan a través de cinco capítulos, del cuento inicial al regreso a casa.</p>
+        <h2 data-h2 data-en="The story" style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">La historia</h2>
+        <p data-en="Linear and self-contained. Three acts unfolding across five chapters, from the opening tale to the return home." style="margin:0;font-size:23px;color:#c3b498;max-width:520px">Lineal y cerrada. Tres actos que avanzan a través de cinco capítulos, del cuento inicial al regreso a casa.</p>
       </div>
       <div data-stack style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center">
         <div style="position:relative;overflow:hidden;border:1px solid #4a3a22;box-shadow:0 16px 40px rgba(0,0,0,0.5);background:#100b08">
           <img src="uploads/Ensayo.webp" alt="Ir a casa o al bosque" data-zoomable style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover">
         </div>
         <div style="display:flex;flex-direction:column;gap:26px">
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">I</span><div><h3 style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">Empieza como un cuento</h3><p style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Un padre le narra una historia a su hija. Esa noche, la niña desaparece.</p></div></div>
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">II</span><div><h3 style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">La búsqueda</h3><p style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Cada jefe acusa a otro, en una cadena de manipulación que interna a Piggy en el monte.</p></div></div>
-          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">III</span><div><h3 style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">El giro</h3><p style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">La verdad estuvo siempre cerca del inicio. El desenlace depende de tus decisiones.</p></div></div>
+          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">I</span><div><h3 data-en="It begins as a fairy tale" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">Empieza como un cuento</h3><p data-en="A father tells his daughter a story. That night, the girl disappears." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Un padre le narra una historia a su hija. Esa noche, la niña desaparece.</p></div></div>
+          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">II</span><div><h3 data-en="The search" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">La búsqueda</h3><p data-en="Each boss blames another, in a chain of manipulation that drives Piggy deeper into the wilds." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">Cada jefe acusa a otro, en una cadena de manipulación que interna a Piggy en el monte.</p></div></div>
+          <div style="display:flex;gap:24px"><span style="font-family:'Cinzel',serif;font-size:30px;font-weight:800;color:#c8a24a;flex-shrink:0;width:56px">III</span><div><h3 data-en="The twist" style="margin:0 0 4px;font-family:'Cinzel',serif;font-size:26px;color:#f0e4cc">El giro</h3><p data-en="The truth was near the beginning all along. The ending depends on your choices." style="margin:0;font-size:21px;line-height:1.4;color:#b6a582">La verdad estuvo siempre cerca del inicio. El desenlace depende de tus decisiones.</p></div></div>
         </div>
       </div>
       <div data-stack2 style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px">
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">1</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">La casa</h3><p style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Cuento inicial y secuestro.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">2</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Bosque del Lobo</h3><p style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Jefe Lobizón, decisión moral.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">3</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">El saladero</h3><p style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Escenario grotesco, jefe Carnicero.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">4</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Ruinas de guerra</h3><p style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Flashback jugable, el hermano.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">5</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Regreso a casa</h3><p style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Revelación, jefe final y decisión.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">1</span><h3 data-en="The home" style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">La casa</h3><p data-en="Opening tale and kidnapping." style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Cuento inicial y secuestro.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">2</span><h3 data-en="The Wolf's Forest" style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Bosque del Lobo</h3><p data-en="Lobizón boss, moral decision." style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Jefe Lobizón, decisión moral.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">3</span><h3 data-en="The saladero" style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">El saladero</h3><p data-en="Grotesque setting, Butcher boss." style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Escenario grotesco, jefe Carnicero.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">4</span><h3 data-en="War ruins" style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Ruinas de guerra</h3><p data-en="Playable flashback, the brother." style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Flashback jugable, el hermano.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:24px 22px;display:flex;flex-direction:column;gap:10px"><span style="font-family:'Cinzel',serif;font-size:40px;font-weight:800;color:#c8a24a;line-height:0.9">5</span><h3 data-en="Return home" style="margin:0;font-family:'Cinzel',serif;font-size:21px;color:#2a1c0f;line-height:1.1">Regreso a casa</h3><p data-en="Revelation, final boss and decision." style="margin:0;font-size:19px;line-height:1.32;color:#5a4632">Revelación, jefe final y decisión.</p></div>
       </div>
     </div>
   </section>
@@ -148,24 +175,24 @@
   <!-- PERSONAJES -->
   <section id="personajes" data-sec style="background:#15100b;padding:104px 56px">
     <div style="max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:48px">
-      <h2 data-h2 style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Personajes</h2>
+      <h2 data-h2 data-en="Characters" style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Personajes</h2>
       <div style="border:1px solid #453620;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,0.5)"><img src="uploads/Personajes en fondo juntos.webp" alt="Los personajes de Piggy Knight" data-zoomable style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 30%"></div>
       <div data-stack2 style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
         <div style="display:flex;flex-direction:column;background:#1e160e;border:1px solid #453620;overflow:hidden">
           <img src="uploads/personaje_piggy.webp" data-zoomable alt="Piggy Knight" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top">
-          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Protagonista</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">Piggy Knight</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Padre y ex guerrero, atormentado por la culpa.</p></div>
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span data-en="Protagonist" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Protagonista</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">Piggy Knight</h3><p data-en="Father and former warrior, tormented by guilt." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Padre y ex guerrero, atormentado por la culpa.</p></div>
         </div>
         <div style="display:flex;flex-direction:column;background:#1e160e;border:1px solid #453620;overflow:hidden">
           <img src="uploads/personaje_lobo.webp" data-zoomable alt="El Lobizón" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top">
-          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Primer jefe</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">El Lobizón</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Criatura del monte, reimaginada desde el folklore.</p></div>
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span data-en="First boss" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Primer jefe</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">El Lobizón</h3><p data-en="A creature of the wilds, reimagined from folklore." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Criatura del monte, reimaginada desde el folklore.</p></div>
         </div>
         <div style="display:flex;flex-direction:column;background:#1e160e;border:1px solid #453620;overflow:hidden">
           <img src="uploads/personaje_hija.webp" data-zoomable alt="La hija" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top">
-          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Motor emocional</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">La hija</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Su secuestro dispara todo.</p></div>
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span data-en="Emotional core" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Motor emocional</span><h3 data-en="The daughter" style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">La hija</h3><p data-en="Her kidnapping sets everything in motion." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">Su secuestro dispara todo.</p></div>
         </div>
         <div style="display:flex;flex-direction:column;background:#1e160e;border:1px solid #453620;overflow:hidden">
           <img src="uploads/personaje_hermano.webp" data-zoomable alt="El hermano" style="width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top">
-          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">El giro</span><h3 style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">El hermano</h3><p style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">El sobreviviente que orquesta la venganza.</p></div>
+          <div style="padding:22px 22px 26px;display:flex;flex-direction:column;gap:8px"><span data-en="The twist" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">El giro</span><h3 data-en="The brother" style="margin:0;font-family:'Cinzel',serif;font-size:24px;color:#f0e4cc">El hermano</h3><p data-en="The survivor who orchestrates the revenge." style="margin:0;font-size:20px;line-height:1.35;color:#b6a582">El sobreviviente que orquesta la venganza.</p></div>
         </div>
       </div>
     </div>
@@ -175,18 +202,18 @@
   <section id="juego" data-sec style="background:linear-gradient(rgba(20,14,9,0.9),rgba(14,9,6,0.95)),url('uploads/fondo_papel.webp') center/cover;padding:104px 56px">
     <div style="max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:48px">
       <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap">
-        <h2 data-h2 style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Jugabilidad</h2>
+        <h2 data-h2 data-en="Gameplay" style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Jugabilidad</h2>
         <div style="display:flex;align-items:center;gap:14px;font-family:'Cinzel',serif;font-size:17px;letter-spacing:0.06em;color:#c9b28c;flex-wrap:wrap">
-          <span>Explorar</span><span style="color:#8a6a3a">→</span><span>Pistas</span><span style="color:#8a6a3a">→</span><span>Combatir</span><span style="color:#8a6a3a">→</span><span style="color:#e6c98a">Jefe</span><span style="color:#8a6a3a">→</span><span style="color:#e6c98a">Decidir</span>
+          <span data-en="Explore">Explorar</span><span style="color:#8a6a3a">→</span><span data-en="Clues">Pistas</span><span style="color:#8a6a3a">→</span><span data-en="Fight">Combatir</span><span style="color:#8a6a3a">→</span><span data-en="Boss" style="color:#e6c98a">Jefe</span><span style="color:#8a6a3a">→</span><span data-en="Decide" style="color:#e6c98a">Decidir</span>
         </div>
       </div>
       <div data-stack2 style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Combate con peso</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Mover, saltar, atacar, esquivar, bloquear y ataque fuerte.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Diálogos ramificados</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Hablá y elegí qué preguntar; las respuestas abren caminos.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Investigación</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Revisá objetos y pistas del entorno, o avanzá más a ciegas.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Puzzles narrativos</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Pocos y siempre al servicio de la historia.</p></div>
-        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Flashbacks jugables</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Mismo combate, otro tono: el Piggy brutal del pasado.</p></div>
-        <div style="background:linear-gradient(rgba(246,224,183,0.82),rgba(232,206,158,0.86)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #c8a24a;border-top:4px solid #9a5a28;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#7a3f14">Decisiones morales</h3><p style="margin:0;font-size:20px;line-height:1.4;color:#5a4028">Al vencer a un jefe: matar o perdonar, con consecuencias.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Weighty combat" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Combate con peso</h3><p data-en="Move, jump, attack, dodge, block and heavy attack." style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Mover, saltar, atacar, esquivar, bloquear y ataque fuerte.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Branching dialogue" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Diálogos ramificados</h3><p data-en="Talk and choose what to ask; answers open new paths." style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Hablá y elegí qué preguntar; las respuestas abren caminos.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Investigation" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Investigación</h3><p data-en="Examine objects and clues around you, or press on more blindly." style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Revisá objetos y pistas del entorno, o avanzá más a ciegas.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Narrative puzzles" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Puzzles narrativos</h3><p data-en="Few, and always in service of the story." style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Pocos y siempre al servicio de la historia.</p></div>
+        <div style="background:linear-gradient(rgba(242,231,206,0.8),rgba(228,211,178,0.84)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #b9a06e;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Playable flashbacks" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#2a1c0f">Flashbacks jugables</h3><p data-en="Same combat, different tone: the brutal Piggy of the past." style="margin:0;font-size:20px;line-height:1.4;color:#5a4632">Mismo combate, otro tono: el Piggy brutal del pasado.</p></div>
+        <div style="background:linear-gradient(rgba(246,224,183,0.82),rgba(232,206,158,0.86)),url('uploads/fondo_papel.webp') center/cover;border:1px solid #c8a24a;border-top:4px solid #9a5a28;padding:28px 30px;display:flex;flex-direction:column;gap:10px"><h3 data-en="Moral decisions" style="margin:0;font-family:'Cinzel',serif;font-size:23px;color:#7a3f14">Decisiones morales</h3><p data-en="After defeating a boss: kill or forgive, with consequences." style="margin:0;font-size:20px;line-height:1.4;color:#5a4028">Al vencer a un jefe: matar o perdonar, con consecuencias.</p></div>
       </div>
     </div>
   </section>
@@ -194,14 +221,14 @@
   <!-- FICHA -->
   <section data-sec style="background:#15100b;padding:96px 56px;border-top:1px solid #2c2318;border-bottom:1px solid #2c2318">
     <div data-stack2 style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:36px 56px">
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Género</span><span style="font-size:22px;color:#e6d9bd">Acción narrativa 2D por capítulos</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Motor</span><span style="font-size:22px;color:#e6d9bd">Unity</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Plataforma</span><span style="font-size:22px;color:#e6d9bd">PC (Steam)</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Duración</span><span style="font-size:22px;color:#e6d9bd">4–6 h, finales alternativos</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Idiomas</span><span style="font-size:22px;color:#e6d9bd">Español e inglés</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Modo</span><span style="font-size:22px;color:#e6d9bd">Un jugador</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Estilo</span><span style="font-size:22px;color:#e6d9bd">Animación a mano y acuarela</span></div>
-      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Referencias</span><span style="font-size:22px;color:#e6d9bd">Cuphead, Hollow Knight, Undertale</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Genre" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Género</span><span data-en="Chapter-based 2D narrative action" style="font-size:22px;color:#e6d9bd">Acción narrativa 2D por capítulos</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Engine" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Motor</span><span style="font-size:22px;color:#e6d9bd">Unity</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Platform" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Plataforma</span><span style="font-size:22px;color:#e6d9bd">PC (Steam)</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Length" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Duración</span><span data-en="4–6 h, alternate endings" style="font-size:22px;color:#e6d9bd">4–6 h, finales alternativos</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Languages" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Idiomas</span><span data-en="Spanish and English" style="font-size:22px;color:#e6d9bd">Español e inglés</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Mode" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Modo</span><span data-en="Single player" style="font-size:22px;color:#e6d9bd">Un jugador</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="Style" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Estilo</span><span data-en="Hand-drawn animation and watercolor" style="font-size:22px;color:#e6d9bd">Animación a mano y acuarela</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span data-en="References" style="font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.14em;text-transform:uppercase;color:#c8a24a">Referencias</span><span style="font-size:22px;color:#e6d9bd">Cuphead, Hollow Knight, Undertale</span></div>
     </div>
   </section>
 
@@ -212,17 +239,17 @@
         <div style="border:1px solid #b9a06e;background:rgba(244,233,208,0.06);padding:20px">
           <img src="uploads/mapa_nowherelado.webp" alt="Mapa de Nowherelado" data-zoomable style="display:block;width:100%;background:#f4e9d0">
         </div>
-        <p style="margin:0;font-size:22px;line-height:1.4;color:#c3b498">El mundo <strong style="color:#e6c98a">Nowherelado</strong> tiene la forma de Uruguay, con easter eggs del país escondidos en cada rincón.</p>
+        <p data-en="The world of <strong style='color:#e6c98a'>Nowherelado</strong> is shaped like Uruguay, with easter eggs of the country hidden in every corner." style="margin:0;font-size:22px;line-height:1.4;color:#c3b498">El mundo <strong style="color:#e6c98a">Nowherelado</strong> tiene la forma de Uruguay, con easter eggs del país escondidos en cada rincón.</p>
       </div>
       <div style="display:flex;flex-direction:column;gap:34px">
-        <h2 data-h2 style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Identidad uruguaya</h2>
+        <h2 data-h2 data-en="Uruguayan identity" style="margin:0;font-family:'Cinzel',serif;font-size:58px;font-weight:700;color:#f4ead4;line-height:1">Identidad uruguaya</h2>
         <div data-stack2 style="display:grid;grid-template-columns:1fr 1fr;gap:28px 44px">
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Guerra entre hermanos</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Ecos de las guerras civiles del pasado criollo.</p></div>
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">El Lobizón</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">El séptimo hijo maldito, el Luisón guaraní.</p></div>
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">El saladero</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">La cultura ganadera y del asado.</p></div>
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Monte y rancho</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Ombú, ceibo y espinillo; mate y fogón.</p></div>
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Música criolla</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Candombe, murga y milonga; diálogos en voseo.</p></div>
-          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Arte en movimiento</h3><p style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Animación a mano y fondos en acuarela.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 data-en="War between brothers" style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Guerra entre hermanos</h3><p data-en="Echoes of the civil wars of the criollo past." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Ecos de las guerras civiles del pasado criollo.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">El Lobizón</h3><p data-en="The cursed seventh son, the Guaraní Luisón." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">El séptimo hijo maldito, el Luisón guaraní.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 data-en="The saladero" style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">El saladero</h3><p data-en="Cattle culture and the asado." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">La cultura ganadera y del asado.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 data-en="Wilds and ranch" style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Monte y rancho</h3><p data-en="Ombú, ceibo and espinillo; mate and campfire." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Ombú, ceibo y espinillo; mate y fogón.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 data-en="Criollo music" style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Música criolla</h3><p data-en="Candombe, murga and milonga; dialogue in voseo." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Candombe, murga y milonga; diálogos en voseo.</p></div>
+          <div style="border-top:1px solid #3a2e1e;padding-top:16px"><h3 data-en="Art in motion" style="margin:0 0 5px;font-family:'Cinzel',serif;font-size:21px;color:#f0e4cc">Arte en movimiento</h3><p data-en="Hand-drawn animation and watercolor backgrounds." style="margin:0;font-size:19px;line-height:1.35;color:#b6a582">Animación a mano y fondos en acuarela.</p></div>
         </div>
       </div>
     </div>
@@ -231,7 +258,7 @@
   <!-- EQUIPO -->
   <section id="equipo" data-sec style="background:#15100b;padding:120px 56px">
     <div style="max-width:880px;margin:0 auto;display:flex;flex-direction:column;gap:22px;align-items:center;text-align:center">
-      <span style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#c8a24a">El estudio</span>
+      <span data-en="The studio" style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.3em;text-transform:uppercase;color:#c8a24a">El estudio</span>
       <h2 style="margin:0;font-family:'Cinzel',serif;font-size:76px;font-weight:700;color:#f4ead4;line-height:1">Nowherelado Games</h2>
       <div style="height:1px;width:220px;background:linear-gradient(90deg,rgba(200,162,74,0),#c8a24a,rgba(200,162,74,0))"></div>
       <p style="margin:0;font-family:'Cinzel',serif;font-size:22px;letter-spacing:0.24em;text-transform:uppercase;color:#c9b28c">Uruguay</p>
@@ -240,22 +267,23 @@
 
   <!-- FOOTER / CIERRE -->
   <footer id="contacto" data-stack style="position:relative;display:grid;grid-template-columns:0.8fr 1.2fr;min-height:560px">
-    <div style="position:relative;overflow:hidden">
+    <div data-footer-img style="position:relative;overflow:hidden;min-height:300px">
       <img src="uploads/Piggy Sad nueva.webp" alt="Piggy Knight" data-zoomable style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%">
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,11,8,0.1) 60%,rgba(15,11,8,0.96) 100%)"></div>
     </div>
-    <div style="background:#0f0b08;display:flex;flex-direction:column;justify-content:center;gap:30px;padding:76px 80px">
-      <h2 style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-size:46px;line-height:1.24;color:#f2e6cd;font-weight:500">¿Puede perdonar a la bestia sin convertirse en ella?</h2>
-      <div style="height:1px;width:300px;background:linear-gradient(90deg,#c8a24a,rgba(200,162,74,0))"></div>
+    <div data-footer-text style="background:#0f0b08;display:flex;flex-direction:column;justify-content:center;gap:30px;padding:76px 80px">
+      <h2 data-footer-quote data-en="Can he forgive the beast without becoming one?" style="margin:0;font-family:'EB Garamond',serif;font-style:italic;font-size:46px;line-height:1.24;color:#f2e6cd;font-weight:500">¿Puede perdonar a la bestia sin convertirse en ella?</h2>
+      <div style="height:1px;width:min(300px,100%);background:linear-gradient(90deg,#c8a24a,rgba(200,162,74,0))"></div>
       <div style="display:flex;flex-direction:column;gap:4px">
-        <span style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.2em;text-transform:uppercase;color:#c8a24a">Prototipo jugable estimado</span>
-        <span style="font-family:'Cinzel',serif;font-size:52px;font-weight:800;color:#f5ecd7;line-height:1">Junio 2028</span>
+        <span data-en="Playable prototype estimated" style="font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.2em;text-transform:uppercase;color:#c8a24a">Prototipo jugable estimado</span>
+        <span data-footer-date data-en="June 2028" style="font-family:'Cinzel',serif;font-size:52px;font-weight:800;color:#f5ecd7;line-height:1">Junio 2028</span>
       </div>
-      <div style="display:flex;align-items:center;gap:26px;margin-top:8px">
-        <img src="uploads/logo_piggyknight.webp" alt="Piggy Knight" style="width:120px;height:auto">
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <a href="https://www.piggyknight.com" style="font-family:'Cinzel',serif;font-size:24px;letter-spacing:0.1em;color:#e6c98a">piggyknight.com</a>
+      <div data-footer-links style="display:flex;align-items:center;gap:26px;margin-top:8px">
+        <img src="uploads/logo_piggyknight.webp" alt="Piggy Knight" data-footer-logo style="width:120px;height:auto;flex-shrink:0">
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+          <a href="https://www.piggyknight.com" data-footer-site style="font-family:'Cinzel',serif;font-size:24px;letter-spacing:0.1em;color:#e6c98a">piggyknight.com</a>
           <span style="font-size:18px;color:#8f8069">Nowherelado Games · Uruguay</span>
+          <a href="privacidad.html" data-en="Privacy policy" style="font-size:16px;color:#8f8069">Política de privacidad</a>
         </div>
       </div>
     </div>
@@ -270,6 +298,33 @@
 </div>
 
 <script>
+  // --- Selector de idioma (ES / EN) ---
+  (function () {
+    var STORE = 'pk_lang';
+    var nodes = document.querySelectorAll('[data-en]');
+    nodes.forEach(function (el) { el.setAttribute('data-es', el.innerHTML); });
+    var btns = document.querySelectorAll('.langtoggle button');
+
+    function setLang(lang) {
+      if (lang !== 'en') lang = 'es';
+      nodes.forEach(function (el) {
+        el.innerHTML = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+      });
+      document.documentElement.lang = lang;
+      btns.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-lang') === lang); });
+      try { localStorage.setItem(STORE, lang); } catch (e) {}
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem(STORE); } catch (e) {}
+    if (!saved) { saved = (navigator.language || '').toLowerCase().indexOf('en') === 0 ? 'en' : 'es'; }
+    setLang(saved);
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+    });
+  })();
+
+  // --- Lightbox ---
   (function () {
     var overlay = document.getElementById('lightbox');
     var lightImg = document.getElementById('lightbox-img');
@@ -293,7 +348,6 @@
       img.addEventListener('click', function () { open(img.src, img.alt); });
     });
 
-    // Click on the image toggles zoom; click on the backdrop or × closes.
     lightImg.addEventListener('click', function (e) {
       e.stopPropagation();
       lightImg.classList.toggle('zoomed');
